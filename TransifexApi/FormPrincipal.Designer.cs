@@ -51,7 +51,7 @@
             this.textToBeTranslated.Location = new System.Drawing.Point(23, 41);
             this.textToBeTranslated.Name = "textToBeTranslated";
             this.textToBeTranslated.Size = new System.Drawing.Size(635, 96);
-            this.textToBeTranslated.TabIndex = 0;
+            this.textToBeTranslated.TabIndex = 4;
             this.textToBeTranslated.Text = "";
             // 
             // richTextBox2
@@ -59,15 +59,15 @@
             this.richTextBox2.Location = new System.Drawing.Point(23, 158);
             this.richTextBox2.Name = "richTextBox2";
             this.richTextBox2.Size = new System.Drawing.Size(635, 96);
-            this.richTextBox2.TabIndex = 1;
+            this.richTextBox2.TabIndex = 0;
             this.richTextBox2.Text = "";
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(533, 278);
+            this.button1.Location = new System.Drawing.Point(23, 260);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(125, 23);
-            this.button1.TabIndex = 2;
+            this.button1.TabIndex = 1;
             this.button1.Text = "Send Translation";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -107,10 +107,10 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(23, 278);
+            this.button2.Location = new System.Drawing.Point(535, 260);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(123, 23);
-            this.button2.TabIndex = 4;
+            this.button2.TabIndex = 2;
             this.button2.Text = "Next sentence";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);

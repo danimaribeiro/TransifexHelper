@@ -169,7 +169,12 @@ namespace TransifexApi
 
         private void button1_Click(object sender, EventArgs e)
         {
-            UpdateTranslation();
+            if (UpdateTranslation())
+            {
+                LoadNextSentence();
+            }
+            else
+                MessageBox.Show("It wasn't possible to save the translation. Try again!", "Sorry!");
         }
       
     }
