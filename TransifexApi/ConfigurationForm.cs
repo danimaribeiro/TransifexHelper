@@ -11,6 +11,8 @@ namespace TransifexApi
 {
     public partial class ConfigurationForm : Form
     {
+        private bool isProjectRight;
+
         public ConfigurationForm()
         {
             InitializeComponent();
@@ -42,18 +44,27 @@ namespace TransifexApi
                 comboLanguage.DataSource = languages;
                 comboLanguage.DisplayMember = "name";
                 comboLanguage.ValueMember = "code";
+
+                comboLanguage.SelectedValue = configuration.LanguadeCode;
+                projectNameTextbox.Text = configuration.ActiveProject;
+                isProjectRight = true;
             }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            TransifexApi.Properties.Settings.Default.Username = usernameText.Text;
-            TransifexApi.Properties.Settings.Default.Password = passwordText.Text;
-            TransifexApi.Properties.Settings.Default.LanguageCode = comboLanguage.SelectedValue.ToString();
-            var project = (Api.Projects)listProjects.SelectedItem;
-            TransifexApi.Properties.Settings.Default.ActiveProject = project.slug;
-            TransifexApi.Properties.Settings.Default.TimeBetweenNotification = (int)timeNumeric.Value;
-            TransifexApi.Properties.Settings.Default.Save();
+            if (isProjectRight)
+            {
+                TransifexApi.Properties.Settings.Default.Username = usernameText.Text;
+                TransifexApi.Properties.Settings.Default.Password = passwordText.Text;
+                TransifexApi.Properties.Settings.Default.LanguageCode = comboLanguage.SelectedValue.ToString();
+                TransifexApi.Properties.Settings.Default.ActiveProject = projectNameTextbox.Text;
+                TransifexApi.Properties.Settings.Default.TimeBetweenNotification = (int)timeNumeric.Value;
+                TransifexApi.Properties.Settings.Default.Save();
+                this.Close();
+            }
+            else
+                MessageBox.Show("Check if the project exists and all the other values are filled.", "Check the values");
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -73,15 +84,20 @@ namespace TransifexApi
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button1_Click_1(object sender, EventArgs e)
         {
             try
             {
                 var api = new Api.ClientApi(new Base.Configuration() { Username = usernameText.Text, Password = passwordText.Text });
-                var languages = api.Projects();
-
-                listProjects.DataSource = languages;
-                listProjects.DisplayMember = "description";                
+                var projectInfo = api.InfoProject(projectNameTextbox.Text);
+                if (projectInfo != null)
+                {
+                    labelProject.Text = projectInfo.description;
+                    labelSourceLanguage.Text = projectInfo.source_language_code;
+                    isProjectRight = true;
+                }
+                else
+                    MessageBox.Show("The project doesn't exist. Check again the name.", "Nothing");
             }
             catch (Exception ex)
             {

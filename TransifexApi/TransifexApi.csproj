@@ -61,6 +61,8 @@
     <Compile Include="Api\ClientApi.cs" />
     <Compile Include="Api\Languages.cs" />
     <Compile Include="Api\Projects.cs" />
+    <Compile Include="Api\Resources.cs" />
+    <Compile Include="Api\Translation.cs" />
     <Compile Include="Base\Configuration.cs" />
     <Compile Include="ConfigurationForm.cs">
       <SubType>Form</SubType>

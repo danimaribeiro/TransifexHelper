@@ -17,6 +17,10 @@ namespace TransifexApi.Base
 
         public int TimeBetweenTranslation { get; set; }
 
+        public int ActualIndexResource { get; set; }
+
+        public int ActualIndexTranslation { get; set; }
+
         public static Configuration GetDefault()
         {
             var config = new Configuration();
