@@ -101,6 +101,7 @@ namespace TransifexApi
                 if (MessageBox.Show("You have typed a translation, do you like to send it before proceed?", "Atention", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
                 {
                     UpdateTranslation();
+                    isDirty = false;
                 }
             }
             index_translation++;
@@ -171,10 +172,16 @@ namespace TransifexApi
         {
             if (UpdateTranslation())
             {
+                isDirty = false;
                 LoadNextSentence();
             }
             else
                 MessageBox.Show("It wasn't possible to save the translation. Try again!", "Sorry!");
+        }
+
+        private void richTextBox2_TextChanged(object sender, EventArgs e)
+        {
+            isDirty = true;
         }
       
     }
