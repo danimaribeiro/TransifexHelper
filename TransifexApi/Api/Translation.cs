@@ -26,8 +26,7 @@ namespace TransifexApi.Api
     }
 
     public class TranslationUpdate
-    {
-        public string source_entity_hash { get; set; }
+    {  
         public string translation { get; set; }
     }
 }
