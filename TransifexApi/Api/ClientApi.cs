@@ -147,7 +147,7 @@ namespace TransifexApi.Api
                 var url = string.Format("https://www.transifex.com/api/2/project/{0}/resource/{1}/translation/{2}/string/{3}", projectName, resource, _configuration.LanguadeCode, translation.CalculateHash());
                 var request = (HttpWebRequest)WebRequest.Create(url);
 
-                var postData = Newtonsoft.Json.JsonConvert.SerializeObject(new TranslationUpdate() { translation = translation.translation });
+                var postData = Newtonsoft.Json.JsonConvert.SerializeObject(new TranslationUpdate() { translation = translation.translation, user = "danimaribeiro" });
                 var data = Encoding.ASCII.GetBytes(postData);
 
                 request.Credentials = new NetworkCredential(_configuration.Username, _configuration.Password);

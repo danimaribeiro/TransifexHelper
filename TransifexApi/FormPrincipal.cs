@@ -48,6 +48,8 @@ namespace TransifexApi
 
                 var api = new Api.ClientApi(_configuration);
                 _resources = api.ProjectResources(_configuration.ActiveProject);
+                index_resource = _configuration.ActualIndexResource;
+                index_translation = _configuration.ActualIndexTranslation;
                 LoadTranslations();
                 LoadNextSentence();
             }
@@ -59,6 +61,7 @@ namespace TransifexApi
             {
                 var api = new Api.ClientApi(_configuration);
                 _translations = api.Translations(_configuration.ActiveProject, _resources[index_resource].slug);
+                _translations = _translations.OrderBy(x => int.Parse(x.key)).ToList();
             }
         }
 
@@ -147,6 +150,18 @@ namespace TransifexApi
             {
                 _translations[index_translation] = translation;
                 textToBeTranslated.Text = translation.source_string;
+                listBox1.Items.Clear();
+                listBox2.Items.Clear();
+                for (int i = index_translation - 5; i < index_translation; i++)
+                {
+                    if (i >= 0)
+                        listBox1.Items.Add(_translations[i].source_string + "    -    " + _translations[i].translation);
+                }
+                for (int i = index_translation + 1; i <= index_translation + 5; i++)
+                {
+                    if (i < _translations.Count)
+                        listBox2.Items.Add(_translations[i].source_string + "    -    " + _translations[i].translation);
+                }
             }
             else
                 index_translation++;
@@ -162,7 +177,7 @@ namespace TransifexApi
                     var api = new Api.ClientApi(_configuration);
                     return api.UpdateTranslation(_configuration.ActiveProject, _resources[index_resource].slug,
                         _translations[index_translation]);
-                   
+
                 }
             }
             return false;
@@ -174,6 +189,7 @@ namespace TransifexApi
             {
                 isDirty = false;
                 LoadNextSentence();
+                richTextBox2.Text = "";
             }
             else
                 MessageBox.Show("It wasn't possible to save the translation. Try again!", "Sorry!");
@@ -183,6 +199,21 @@ namespace TransifexApi
         {
             isDirty = true;
         }
-      
+
+        private void richTextBox2_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.S)
+            {
+                if (UpdateTranslation())
+                {
+                    isDirty = false;
+                    LoadNextSentence();
+                    richTextBox2.Text = "";
+                }
+                else
+                    MessageBox.Show("It wasn't possible to save the translation. Try again!", "Sorry!");
+            }
+        }
+
     }
 }

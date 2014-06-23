@@ -28,5 +28,7 @@ namespace TransifexApi.Api
     public class TranslationUpdate
     {  
         public string translation { get; set; }
+        public bool reviewed { get; set; }
+        public string user { get; set; }
     }
 }

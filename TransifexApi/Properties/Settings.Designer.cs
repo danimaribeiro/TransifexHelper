@@ -82,5 +82,29 @@ namespace TransifexApi.Properties {
                 this["TimeBetweenNotification"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int ActualIndexResource {
+            get {
+                return ((int)(this["ActualIndexResource"]));
+            }
+            set {
+                this["ActualIndexResource"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int ActualIndexTranslation {
+            get {
+                return ((int)(this["ActualIndexTranslation"]));
+            }
+            set {
+                this["ActualIndexTranslation"] = value;
+            }
+        }
     }
 }

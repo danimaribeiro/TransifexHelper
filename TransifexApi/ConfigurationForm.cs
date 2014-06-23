@@ -48,6 +48,8 @@ namespace TransifexApi
                 comboLanguage.SelectedValue = configuration.LanguadeCode;
                 projectNameTextbox.Text = configuration.ActiveProject;
                 isProjectRight = true;
+                LoadResouces();
+                cmbResources.SelectedIndex = configuration.ActualIndexResource;
             }
         }
 
@@ -60,6 +62,7 @@ namespace TransifexApi
                 TransifexApi.Properties.Settings.Default.LanguageCode = comboLanguage.SelectedValue.ToString();
                 TransifexApi.Properties.Settings.Default.ActiveProject = projectNameTextbox.Text;
                 TransifexApi.Properties.Settings.Default.TimeBetweenNotification = (int)timeNumeric.Value;
+                TransifexApi.Properties.Settings.Default.ActualIndexResource = cmbResources.SelectedIndex;
                 TransifexApi.Properties.Settings.Default.Save();
                 this.Close();
             }
@@ -95,6 +98,7 @@ namespace TransifexApi
                     labelProject.Text = projectInfo.description;
                     labelSourceLanguage.Text = projectInfo.source_language_code;
                     isProjectRight = true;
+                    LoadResouces();
                 }
                 else
                     MessageBox.Show("The project doesn't exist. Check again the name.", "Nothing");
@@ -105,5 +109,14 @@ namespace TransifexApi
             }
         }
 
+
+        private void LoadResouces()
+        {
+            var api = new Api.ClientApi(new Base.Configuration() { Username = usernameText.Text, Password = passwordText.Text });
+            var resources = api.ProjectResources(projectNameTextbox.Text);
+            cmbResources.DataSource = resources;
+            cmbResources.DisplayMember = "name";
+            cmbResources.ValueMember = "slug";
+        }
     }
 }

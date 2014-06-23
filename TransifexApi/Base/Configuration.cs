@@ -29,6 +29,8 @@ namespace TransifexApi.Base
             config.Password = TransifexApi.Properties.Settings.Default.Password;
             config.LanguadeCode = TransifexApi.Properties.Settings.Default.LanguageCode;
             config.TimeBetweenTranslation = TransifexApi.Properties.Settings.Default.TimeBetweenNotification;
+            config.ActualIndexResource = TransifexApi.Properties.Settings.Default.ActualIndexResource;
+            config.ActualIndexTranslation = TransifexApi.Properties.Settings.Default.ActualIndexTranslation;
             if (config.IsValid())
                 return config;
             else
