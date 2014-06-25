@@ -145,7 +145,7 @@ namespace TransifexApi
         private void CheckTranslation(Api.Translation translation)
         {
             var api = new Api.ClientApi(_configuration);
-            translation = api.GetTranslation(_configuration.ActiveProject, _resources[index_resource].slug, translation);
+            //translation = api.GetTranslation(_configuration.ActiveProject, _resources[index_resource].slug, translation);
             if (!translation.reviewed && string.IsNullOrWhiteSpace(translation.translation))
             {
                 _translations[index_translation] = translation;

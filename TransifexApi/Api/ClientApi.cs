@@ -142,43 +142,38 @@ namespace TransifexApi.Api
 
         public bool UpdateTranslation(string projectName, string resource, Translation translation)
         {
-            try
-            {
-                var url = string.Format("https://www.transifex.com/api/2/project/{0}/resource/{1}/translation/{2}/string/{3}", projectName, resource, _configuration.LanguadeCode, translation.CalculateHash());
-                var request = (HttpWebRequest)WebRequest.Create(url);
-
-                var postData = Newtonsoft.Json.JsonConvert.SerializeObject(new TranslationUpdate() { translation = translation.translation, user = "danimaribeiro" });
-                var data = Encoding.ASCII.GetBytes(postData);
-
-                request.Credentials = new NetworkCredential(_configuration.Username, _configuration.Password);
-                request.Method = "PUT";
-                request.ContentType = "application/json";
-                request.ContentLength = data.Length;
-
-                using (var stream = request.GetRequestStream())
+            System.Threading.Tasks.Task.Run(() =>
                 {
-                    stream.Write(data, 0, data.Length);
-                }
-                var response = (HttpWebResponse)request.GetResponse();
-                var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
-                return "OK" == responseString;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-            //HttpClientHandler handler = new HttpClientHandler();
-            //handler.Credentials = new NetworkCredential(_configuration.Username, _configuration.Password);
+                    for (int i = 0; i < 3; i++)
+                    {
+                        try
+                        {
+                            var url = string.Format("https://www.transifex.com/api/2/project/{0}/resource/{1}/translation/{2}/string/{3}", projectName, resource, _configuration.LanguadeCode, translation.CalculateHash());
+                            var request = (HttpWebRequest)WebRequest.Create(url);
 
-            //using (var client = new HttpClient(handler))
-            //{
-            //    client.BaseAddress = new Uri("https://www.transifex.com/api/2/");                
-            //    client.DefaultRequestHeaders.Clear();                
+                            var postData = Newtonsoft.Json.JsonConvert.SerializeObject(new TranslationUpdate() { translation = translation.translation, user = "danimaribeiro" });
+                            var data = Encoding.ASCII.GetBytes(postData);
 
-            //    var url = string.Format("project/{0}/resource/{1}/translation/{2}/string/{3}", projectName, resource, _configuration.LanguadeCode, translation.CalculateHash());
-            //    HttpResponseMessage response = client.PutAsJsonAsync<TranslationUpdate>(url, new TranslationUpdate() { translation = translation.translation }).Result;
-            //    return response.IsSuccessStatusCode;
-            //}
+                            request.Credentials = new NetworkCredential(_configuration.Username, _configuration.Password);
+                            request.Method = "PUT";
+                            request.ContentType = "application/json";
+                            request.ContentLength = data.Length;
+
+                            using (var stream = request.GetRequestStream())
+                            {
+                                stream.Write(data, 0, data.Length);
+                            }
+                            var response = (HttpWebResponse)request.GetResponse();
+                            var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
+                            if ("OK" == responseString)
+                                break;
+                        }
+                        catch (Exception)
+                        {                            
+                        }
+                    }
+                });
+            return true;
         }
 
     }
