@@ -152,7 +152,7 @@ namespace TransifexApi.Api
                             var request = (HttpWebRequest)WebRequest.Create(url);
 
                             var postData = Newtonsoft.Json.JsonConvert.SerializeObject(new TranslationUpdate() { translation = translation.translation, user = "danimaribeiro" });
-                            var data = Encoding.ASCII.GetBytes(postData);
+                            var data = Encoding.UTF8.GetBytes(postData);
 
                             request.Credentials = new NetworkCredential(_configuration.Username, _configuration.Password);
                             request.Method = "PUT";
